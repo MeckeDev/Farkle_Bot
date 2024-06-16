@@ -1,2 +1,5 @@
 venv
+__*
 secrets.json
+matches.json
+users.json

@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+from points import calc_points as cp
 import json
 
 # Set up the bot with the command prefix #
@@ -21,8 +22,16 @@ async def on_message(message):
 
     await bot.process_commands(message)
 
-@bot.command(name="hello", help="Responds with Hello!")
-async def hello(ctx):
-    await ctx.send("Hello!")
+@bot.command(name="points", help="test points")
+async def points(ctx, *, message):
+# Convert the numbers to integers
+    try:
+        user_pick = [int(num) for num in message.split(" ")]
+        if (max(user_pick) > 6):
+            raise ValueError
+        await ctx.send(f'Your Combination would result in {cp(user_pick)}')
+    except ValueError:
+        await ctx.send("Only numbers from 1 - 6 are valid.")
+        return
 
 bot.run(secrets["TOKEN"])
